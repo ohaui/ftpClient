@@ -11,8 +11,8 @@ def connect(HOST, PORT):
 
 
 try:
-    user_choice = input('connect or login: ') == 'login'
-    if user_choice.lower() == 'login':
+    user_choice =  input('connect or login: ')
+    if user_choice == 'login':
         HOST = input('Enter host adress: ')
         login = input('Enter login or press enter if standart: ')
         password = input('Enter passsword or press enter if standart: ')
@@ -25,12 +25,12 @@ try:
                 ftp.login(login, password)
         except:
             print('Login or password is wrong. Try again...')
-    elif user_choice.lower() == 'connect':
+    elif user_choice == 'connect':
         HOST = input('Enter host ip: ')
         PORT = int(input('Enter port if needed, if not do not type anything: '))
         hostport = '{}:{}'.format(HOST, PORT)
         ftp = FTP()
-        connect(HOST, PORT)
+        ftp.connect(HOST, PORT)
 except ValueError:
     print(" Only integers acceptable in port input")
 except gaierror:
@@ -43,7 +43,7 @@ else:
 
 
 def path():
-    return ftp.pwd() # returns path 
+   return ftp.pwd() #returns path
 
 def list_dir():
     print(' \n '.join(ftp.nlst())) #prints files and directories in the directory
@@ -63,7 +63,7 @@ def delete_file(name):
 def download_file(path, file_name):
     urlretrieve('ftp://{hostport}{path}'.format(hostport = hostport,path=path), '{}'.format(file_name))
 
-def delete_dir(name): 
+def delete_dir(name):
     ftp.rmd(name) #deletes selected directory
 
 def upload_file(name):
@@ -128,7 +128,7 @@ while True:
                 print(' Succsessfully deleted')
         else:
             print(' Successfully deleted')
-    
+
     elif user_input.startswith('rename '):
         name = user_input.replace('rename ', '')
         new_name = input('Enter new name: ')
@@ -138,7 +138,7 @@ while True:
             print(' ERROR: There is no such directory (550)')
         else:
             print(' Succsessfully renamed')
-    
+
     elif user_input.startswith('get '):
         try:
             file_name = user_input.replace('get ', '')
@@ -148,7 +148,7 @@ while True:
             print(error)
         else:
             print(' {} downloaded succsessfully'.format(file_name))
-    
+
     elif user_input.startswith('getd '):
         dir_name = user_input.replace('getd ', '')
         dir_path = path()
@@ -162,7 +162,7 @@ while True:
                 dir_name = str(datetime.now().strftime("%Y-%m %H-%M-%S"))
                 os.mkdir(dir_name)
                 os.chdir(dir_name)
-        try:        
+        try:
             for counts in ftp.nlst():
                 print(' Downloading -> {}'.format(counts))
                 urlretrieve('ftp://{host}:{port}{directory}/{counts}'.format(directory = dir_path, counts = counts,
@@ -180,7 +180,3 @@ while True:
             print(error)
     else:
         print(' ERROR: Nonexistent command. Try "help"')
-
-        
-
-    
