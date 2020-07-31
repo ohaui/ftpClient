@@ -58,13 +58,13 @@ def mkdir(name):
     ftp.mkd(name) #makes directory
 
 def delete_file(name):
-    ftp.delete(name) #deletes selected file
+    ftp.delete(name) #removes selected file
 
 def download_file(path, file_name):
     urlretrieve('ftp://{hostport}{path}'.format(hostport = hostport,path=path), '{}'.format(file_name))
 
 def delete_dir(name):
-    ftp.rmd(name) #deletes selected directory
+    ftp.rmd(name) #removes selected directory
 
 def upload_file(name):
     with open(name, 'rb') as file:
@@ -80,7 +80,7 @@ def help(): #prints help commands
         connect 'host':'port if needed' - connects to the server.
         help - prints all available commands.
         mkdir "name" - makes directory.
-        del - deletes the selected file/directory.
+        del - removes the selected file/directory.
         rename - renames selected dir/file.
         get "file" - downloads selected file. YOU CAN'T DOWNLOAD DIRECTORY!
         getd - downloads CURRENT directory. YOU CAN'T DOWNLOAD FILE!
